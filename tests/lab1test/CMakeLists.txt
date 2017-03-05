@@ -19,7 +19,7 @@ add_executable(lab1_factorial_tests ${FACTORIAL_SRC})
 target_link_libraries(lab1_factorial_tests ${GTEST_LIBS})
 target_link_libraries(lab1_factorial_tests libfactorial)
 
-add_executable(lab1_reverse_string_tests ${REVERSE_STRING_SRC})
+add_executable(lab1_reverse_string_tests ${REVERSE_STRING_SRC} ../../lab1/reversestring/ReverseString.cpp ../../lab1/reversestring/ReverseString.h)
 
 target_link_libraries(lab1_reverse_string_tests ${GTEST_LIBS})
 target_link_libraries(lab1_reverse_string_tests libreversestring)
