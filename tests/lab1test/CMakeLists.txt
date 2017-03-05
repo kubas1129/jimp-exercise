@@ -6,7 +6,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
 
 set(FACTORIAL_SRC FactorialTest.cpp)
-set(REVERSE_STRING_SRC ReverseStringTest.cpp)
+set(REVERSE_STRING_SRC ReverseStringTest.cpp ../../lab1/reversestring/ReverseString.cpp ../../lab1/reversestring/ReverseString.h)
 set(PALINDROME_SRC PalindromeTest.cpp)
 set(MULTIPLICATION_TABLE_SRC MultiplicationTableTest.cpp)
 set(DOUBLE_BASE_PALINDROME_SRC DoubleBasePalindromeTest.cpp)
@@ -19,12 +19,12 @@ add_executable(lab1_factorial_tests ${FACTORIAL_SRC})
 target_link_libraries(lab1_factorial_tests ${GTEST_LIBS})
 target_link_libraries(lab1_factorial_tests libfactorial)
 
-add_executable(lab1_reverse_string_tests ${REVERSE_STRING_SRC} ../../lab1/reversestring/ReverseString.cpp ../../lab1/reversestring/ReverseString.h)
+add_executable(lab1_reverse_string_tests ${REVERSE_STRING_SRC} ../../lab1/reversestring/main.cpp ../../lab1/reversestring/ReverseString.cpp ../../lab1/reversestring/ReverseString.h)
 
 target_link_libraries(lab1_reverse_string_tests ${GTEST_LIBS})
 target_link_libraries(lab1_reverse_string_tests libreversestring)
 
-add_executable(lab1_palindrome_tests ${PALINDROME_SRC})
+add_executable(lab1_palindrome_tests ${PALINDROME_SRC} ../../lab1/palindrome/Palindrome.cpp ../../lab1/palindrome/Palindrome.h ../../lab1/palindrome/main.cpp)
 
 target_link_libraries(lab1_palindrome_tests ${GTEST_LIBS})
 target_link_libraries(lab1_palindrome_tests libpalindrome)
