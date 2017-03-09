@@ -7,12 +7,12 @@
 
 #include <iostream>
 #include <cstdint>
+#include "ReverseString.h"
+#include "Palindrome.h"
 
 uint64_t DoubleBasePalindromes(int max_vaule_exculsive);
 
-std::string toBinary(int value);
-bool is_DPalindrome(std::string str);
-std::string reverseDPalindrom(std::string str);
+std::string ReverseToBinary(int value);
 
 
 #endif //JIMP_EXERCISES_DOUBLEBASEPALINDROMES_H

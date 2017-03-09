@@ -2,6 +2,7 @@
 // Created by kubas1129 on 05.03.17.
 //
 
+#include <iostream>
 #include "MultiplicationTable.h"
 
 void MultiplicationTable(int tab[][10])
@@ -23,6 +24,6 @@ void ShowTable(int tab[][10])
         {
             std::cout << (tab[i][k] < 10? " ":"") << tab[i][k] << " | ";
         }
-        std::cout << "\n";
+        std::cout << std::endl;
     }
 }

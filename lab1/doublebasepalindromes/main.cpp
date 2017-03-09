@@ -6,6 +6,6 @@
 
 int main()
 {
-    std::cout << "Value: " << DoubleBasePalindromes(1000000) << std::endl;
+    std::cout << "Value: " << ReverseToBinary(10)<< std::endl;
     return 0;
 }

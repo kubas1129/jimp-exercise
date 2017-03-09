@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.6)
 project(jimp_exercises)
 
-include(CTest)
-
 set(CMAKE_CXX_STANDARD 14)
 
 macro(add_subdirectory_if_exists DIR)

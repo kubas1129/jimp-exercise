@@ -5,6 +5,6 @@
 #ifndef JIMP_EXERCISES_FACTORIAL_H
 #define JIMP_EXERCISES_FACTORIAL_H
 
-long long int factorial(long long int value);
+long long int Factorial(long long int value);
 
 #endif //JIMP_EXERCISES_FACTORIAL_H

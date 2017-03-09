@@ -7,6 +7,6 @@
 
 int main()
 {
-    std::cout << "ReverseString: " << reverse("abc") << std::endl;
+    std::cout << "ReverseString: " << reverse("sd") << std::endl;
     return 0;
 }
