@@ -3,6 +3,25 @@
 //
 #include "Factorial.h"
 
-int factorial(int value) {
-  return 0;
+long long int Factorial(long long int value)
+{
+  if(value  == 0) return 1;
+  if(value >= 13 || value <= -13) return 0;
+
+  if(value > 0)
+  {
+    for(int i = (value-1); i > 0;i--)
+    {
+      value = value * i;
+    }
+  }
+  else
+  {
+    for(int i = (value+1); i < 0;i++)
+    {
+      value = value * i;
+    }
+  }
+
+  return value;
 }
