@@ -47,7 +47,7 @@ ForwardList *PushFront(ForwardList *list, int value)
 }
 
 void Append(ForwardList *list, ForwardList *tail)
-{/*
+{
     if(tail != nullptr)
     {
         while(list->next != nullptr)
@@ -56,5 +56,5 @@ void Append(ForwardList *list, ForwardList *tail)
         }
 
         list->next = tail;
-    }*/
+    }
 }
