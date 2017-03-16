@@ -4,10 +4,12 @@
 
 #include "SimpleForwardList.h"
 
+
 ForwardList *CreateNode(int value)
 {
     ForwardList *list = new ForwardList;
     list->value = value;
+    list->next = nullptr;
     return list;
 }
 
@@ -35,14 +37,19 @@ ForwardList *PushFront(ForwardList *list, int value)
 
     ForwardList *new_list = CreateNode(value);
     new_list->next = list;
+
     return new_list;
 }
 
 void Append(ForwardList *list, ForwardList *tail)
 {
-
-    if(list != nullptr)
+    if(tail != nullptr)
     {
-        list->next=tail;
+        while(list->next != nullptr)
+        {
+            list = list->next;
+        }
+
+        list->next = tail;
     }
 }
