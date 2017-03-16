@@ -33,16 +33,21 @@ void DestroyList(ForwardList *list)
 ForwardList *PushFront(ForwardList *list, int value)
 {
 
-    if(list == nullptr) return nullptr;
+    if(list == nullptr)
+    {
+        return nullptr;
+    }
+    else
+    {
+        ForwardList *new_list = CreateNode(value);
+        new_list->next = list;
 
-    ForwardList *new_list = CreateNode(value);
-    new_list->next = list;
-
-    return new_list;
+        return new_list;
+    }
 }
 
 void Append(ForwardList *list, ForwardList *tail)
-{
+{/*
     if(tail != nullptr)
     {
         while(list->next != nullptr)
@@ -51,5 +56,5 @@ void Append(ForwardList *list, ForwardList *tail)
         }
 
         list->next = tail;
-    }
+    }*/
 }
