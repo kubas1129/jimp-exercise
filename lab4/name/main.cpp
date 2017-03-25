@@ -2,11 +2,10 @@
 // Created by kubas1129 on 23.03.17.
 //
 
-#include "Square.h"
-#include "Point.h"
+#include "Name.h"
 
-int main(){
-
+int main()
+{
 
     return 0;
 }
