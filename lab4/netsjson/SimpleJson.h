@@ -20,7 +20,8 @@ namespace nets{
         BOOL = 3,
         STRING = 4,
         VECTOR = 5,
-        MAP = 6
+        MAP = 6,
+        CHAR = 7
     };
 
     class JsonValue{
@@ -41,13 +42,23 @@ namespace nets{
             used_type = VALUE::INT;
         }
         JsonValue(const char* arg){
-
+            value_ += "\"";
+            int i = 0;
+            while(arg[i] != '\0')
+            {
+                if(arg[i] == 34 || arg[i] == 92) value_ += "\\";
+                value_ += arg[i];
+                i++;
+            }
+            value_ += "\"";
+            used_type = VALUE::CHAR;
         }
         JsonValue(const std::string &arg) {
 
             value_ += "\"";
             for(auto v : arg)
             {
+                if(v == 34 || v == 92) value_ += "\\";
                 value_ += v;
             }
             value_ += "\"";
@@ -70,8 +81,6 @@ namespace nets{
         std::vector<nets::JsonValue> vec_;
         std::map<std::string, nets::JsonValue> map_;
         nets::VALUE used_type {VALUE::NONE};
-
-
     };
 
 
