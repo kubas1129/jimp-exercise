@@ -9,7 +9,6 @@ ForwardList *CreateNode(int value)
 {
     ForwardList *list = new ForwardList;
     list->value = value;
-    list->next = nullptr;
     return list;
 }
 
@@ -17,14 +16,13 @@ void DestroyList(ForwardList *list)
 {
     if(list != nullptr)
     {
-        ForwardList *temp_list = new ForwardList;
+        ForwardList *temp_list;
         while(list->next != nullptr)
         {
             temp_list = list;
             list = list->next;
             delete temp_list;
         }
-        delete temp_list;
         delete list;
     }
 
@@ -33,7 +31,7 @@ void DestroyList(ForwardList *list)
 ForwardList *PushFront(ForwardList *list, int value)
 {
 
-    if(list == nullptr) return nullptr;
+    if(list == nullptr)  return nullptr;
 
     ForwardList *new_list = CreateNode(value);
     new_list->next = list;
@@ -45,11 +43,17 @@ void Append(ForwardList *list, ForwardList *tail)
 {
     if(tail != nullptr)
     {
+        if(list == nullptr) return;
+
         while(list->next != nullptr)
         {
             list = list->next;
         }
 
         list->next = tail;
+    }
+    else
+    {
+        list->next = nullptr;
     }
 }
