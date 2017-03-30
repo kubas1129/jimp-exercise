@@ -3,14 +3,11 @@
 //
 #include <sstream>
 #include <regex>
-#include <cmath>
 
 #include "MinimalTimeDifference.h"
 
 namespace minimaltimedifference
 {
-
-
 
 unsigned int MinimalTimeDifference(std::vector<std::string> times)
 {
@@ -22,16 +19,43 @@ unsigned int MinimalTimeDifference(std::vector<std::string> times)
         times_minutes.push_back(ToMinutes(v));
     }
 
-    unsigned int smaller=0;
+    unsigned int smaller = 1440;
 
     for(unsigned int t1 : times_minutes)
     {
         for(unsigned int t2: times_minutes)
         {
             {
-                unsigned int m=abs(t1 - t2);
+                if(t1 != t2)
+                {
+                    //normal count with abs
+                    int m1 = abs(t1 - t2);
 
-                    if(m> smaller) smaller = m;
+
+                    //second count
+                    int m2, m3, m4;
+
+                    if(t1 > 720) {
+                        m2 = abs(1440 - t1);
+                    }else{
+                        m2 = t1;
+                    }
+                    if(t2 > 720){
+                        m3 = abs(1440 - t2);
+                    }else{
+                        m3 = t2;
+                    }
+
+                    m4 = m2 + m3;
+
+                    //Check which time is less than smaller
+                    if(m1 > m4) {
+                        if(m4 < smaller) smaller = m4;
+                    }else {
+                        if(m1 < smaller) smaller = m1;
+                    }
+                }
+
 
             }
         }
@@ -72,8 +96,6 @@ unsigned int ToMinutes(std::string time_HH_MM)
     }
 
     return minutes;
-
-    return 0;
 }
 
 }

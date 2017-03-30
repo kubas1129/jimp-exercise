@@ -6,7 +6,7 @@
 #define JIMP_EXERCISES_MINIMALTIMEDIFFERENCE_H
 
 #include <vector>
-
+#include <string>
 
 namespace minimaltimedifference
 {
