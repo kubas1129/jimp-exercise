@@ -8,14 +8,33 @@ XXX make_copy(XXX xxx) {
     return xxx;
 }
 
-int main() {
+int MainCopy() {
+    //Konstrukcja obiektu za pomocą domyślnego konstruktora
+    //nieciekawe
+    XXX old_xxx {};
+
+    //Konstrukcja obiektu na podstawie już zaincjalizowanego
+    XXX new_xxx {old_xxx};
+
+    //znowu nieciekawy konstruktor domyślny...
+    XXX another_xxx {};
+
+    //tutaj przypisujemy stan obiektu jednego do drugiego
+    //ale obydwa są już zaincjalizowane...
+    another_xxx = new_xxx;
+
+    //tutaj kończy się zakres funkcji main i wszystkie trzy obiekty tracą ważność
+    //zostają wywołane więc destruktory
+}
+
+int MainMove() {
     //Konstrukcja obiektu za pomocą domyślnego konstruktora
     //nieciekawe
     XXX old_xxx {};
 
     //Konstrukcja obiektu na podstawie już zaincjalizowanego
     //z przeniesieniem old_xxx jest niszczony
-    XXX new_xxx {move(old_xxx)};
+    XXX new_xxx {std::move(old_xxx)};
 
     //znowu nieciekawy konstruktor domyślny...
     XXX another_xxx {};
@@ -35,4 +54,11 @@ int main() {
 
     //tutaj kończy się zakres funkcji main i wszystkie trzy obiekty tracą ważność
     //zostają wywołane więc destruktory (na wszystkich trzech, ale tylko jeden ma ważny stan)
+}
+
+int main(){
+
+    MainMove();
+    MainCopy();
+    return 0;
 }

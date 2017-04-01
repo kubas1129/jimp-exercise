@@ -4,15 +4,23 @@
 
 #include "XXX.h"
 
+XXX::XXX() : name_{new char[1024]} {
+
+}
 
 //konstruktor kopiujący:
 XXX::XXX(const XXX& xxx) {
-    size_t sz = strlen(xxx.name_);
-    name_ = new char[sz];
-    strcpy(name_,xxx.name_);
+    Copy(xxx);
     //Teraz nowy obiekt pokazuje na nowy fragment pamięci,
     //ale ze skopiowaną informacją
 }
+
+void XXX::Copy(const XXX &xxx) {
+    size_t sz = strlen(xxx.name_);
+    name_ = new char[sz];
+    strcpy(name_, xxx.name_);
+}
+
 //operator przypisania:
 XXX & XXX::operator=(const XXX& xxx) {
     //jeśli ktoś wpadł na pomysł x = x;
@@ -24,20 +32,23 @@ XXX & XXX::operator=(const XXX& xxx) {
     delete[] name_;
     //i wreszcie kopiowanie, ten kod jest
     //jest identyczny więc można by go wydzielić do innej metody...
-    size_t sz = strlen(xxx.name_);
-    name_ = new char[sz];
-    strcpy(name_,xxx.name_);
+    Copy(xxx);
 }
 
 
 //konstruktor przenoszący:
-XXX::XXX(XXX &&xxx) : name_{nullptr} {
-    swap(name_,xxx.name_);
+XXX::XXX(XXX &&xxx) {
+    Move(std::move(xxx));
     //Bardzo popularna szutczka
     //wiemy, ze za chwilę xxx zostanie zniszczony
     //za pomocą destrukotra, więc inicjalizujemy
     //this na nullptr i wymieniamy się z xxx
     //delete nullptr jest bezpieczna operacją i nic się nie stanie...
+}
+
+void XXX::Move(XXX &&xxx) {
+    name_ = nullptr;
+    swap(name_, xxx.name_);
 }
 
 //operator przenoszący:
@@ -53,4 +64,8 @@ XXX & XXX::operator=(XXX &&xxx) {
     //jest identyczny więc można by go wydzielić do innej metody...
     name_ = nullptr;
     swap(name_,xxx.name_);
+}
+
+XXX::~XXX() {
+    delete [] name_;
 }

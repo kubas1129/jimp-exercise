@@ -31,6 +31,12 @@ public:
     XXX &operator=(XXX &&xxx);
     //5. Destruktor
     ~XXX();
+private:
+    char *name_;
+
+    void Copy(const XXX &xxx);
+
+    void Move(XXX &&xxx);
 };
 
 #endif //JIMP_EXERCISES_XXX_H
