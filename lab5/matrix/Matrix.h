@@ -16,31 +16,34 @@ namespace algebra {
     public:
         Matrix() {};
 
-        Matrix(unsigned long m, unsigned long n){
-            size_.first = m;
-            size_.second = n;
-        }
+        Matrix(unsigned long rows, unsigned long columns);
 
         Matrix(std::initializer_list<std::vector<std::complex<double>>> init);
 
-        Matrix(const char* tab);
-
-
+        //Usable methods
         std::pair<unsigned long, unsigned long> Size() const;
 
         std::string Print() const;
 
+        std::vector<std::complex<double>> CreateColumnForRow(unsigned long rows) const;
+
+        std::complex<double> CountMultiply(int i, int j, const std::vector<std::vector<std::complex<double>>> &value1, const std::vector<std::vector<std::complex<double>>> &value2,
+                                           unsigned long iter) const;
+
+        //Math Method
         Matrix Add(const Matrix &matrix) const;
 
         Matrix Mul(const Matrix &matrix) const;
 
+        Matrix Sub(const Matrix &matrix) const;
+
+        Matrix Pow(int power);
+
         ~Matrix();
 
     private:
-        std::complex<double> **values_;
+        std::vector<std::vector<std::complex<double>>> values_;
         std::pair<unsigned long, unsigned long> size_; //first=rows, second=columns
-
-
     };
 
 }
