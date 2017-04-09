@@ -1,0 +1,15 @@
+//
+// Created by kubas1129 on 06.04.17.
+//
+
+#ifndef JIMP_EXERCISES_STUDENTREPOSITORY_H
+#define JIMP_EXERCISES_STUDENTREPOSITORY_H
+
+
+
+class StudentRepository {
+
+};
+
+
+#endif //JIMP_EXERCISES_STUDENTREPOSITORY_H
