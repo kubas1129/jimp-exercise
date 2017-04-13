@@ -5,7 +5,10 @@
 #ifndef JIMP_EXERCISES_WORDCOUNTER_H
 #define JIMP_EXERCISES_WORDCOUNTER_H
 
-namespace wordcounter {
+#include "Word.h"
+#include "Counts.h"
+
+namespace datastructures {
 
 
     class WordCounter {

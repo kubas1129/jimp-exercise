@@ -3,3 +3,8 @@
 //
 
 #include "WordCounter.h"
+
+namespace datastructures{
+
+
+}
