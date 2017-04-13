@@ -7,4 +7,12 @@
 namespace datastructures{
 
 
+    Counts::Counts(int para) {
+        counts_=para;
+    }
+
+    Counts &Counts::operator++() {
+        this->counts_++;
+        return *this;
+    }
 }
