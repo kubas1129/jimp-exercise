@@ -23,6 +23,8 @@ namespace academia {
 
         void SetYear(int year) { year_=year;}
 
+        operator int() const { return year_; }
+
     private:
         int year_;
 
