@@ -45,11 +45,6 @@ namespace datastructures{
     }
 
 
-
-
-
-
-
     WordCounter &WordCounter::operator++() {
 
     }
@@ -129,12 +124,24 @@ namespace datastructures{
     }
 
     WordCounter WordCounter::FromInputStream(std::istream *input) {
+
+        std::string content = std::string{std::istreambuf_iterator<char>(*input),std::istreambuf_iterator<char>()};
         WordCounter wc;
-        while(input->eof())
+
+        std::string temp="";
+        for(const char &v : content)
         {
-            std::cout << input->get() << "," << std::endl;
+            if((v >= 'A' && v <= 'Z') || (v >= 'a' && v <= 'z')){
+                temp += v;
+            }
+            else
+            {
+                if(temp.length() != 0) wc.AddPair(temp, Counts());
+                temp = "";
+            }
         }
-        std::cout << "koniec" << std::endl;
+
+
         return wc;
     }
 
@@ -148,6 +155,23 @@ namespace datastructures{
     }
 
     void WordCounter::AddPair(Word w, Counts c) {
-        dictionary_.push_back(std::pair<Word,Counts>(w,c));
+        int ind = 0;
+        if(IsInDictionary(w.GetWord(),ind))
+        {
+            dictionary_[ind].second.operator++();
+        }
+        else
+        {
+            dictionary_.push_back(std::pair<Word,Counts>(w,c));
+            distinct_size_++;
+        }
+        total_size_++;
+    }
+
+    void WordCounter::Print() {
+        for(const auto &v : dictionary_)
+        {
+            std::cout << v.first.GetWord() << " : " << v.second.GetCounts() << ",";
+        }
     }
 }

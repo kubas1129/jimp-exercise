@@ -9,6 +9,7 @@
 #include <set>
 #include <vector>
 #include <algorithm>
+#include <istream>
 #include "Word.h"
 #include "Counts.h"
 
@@ -16,11 +17,8 @@ namespace datastructures {
 
 
     class WordCounter {
-    private:
-        std::vector<std::pair<Word, Counts>> dictionary_;
-        unsigned int distinct_size_,total_size_;
-    public:
 
+    public:
 
         WordCounter();
         WordCounter(std::initializer_list<datastructures::Word> init);
@@ -43,6 +41,13 @@ namespace datastructures {
         void Sort();
 
         friend std::ostream& operator<<(std::ostream &os, WordCounter &wc);
+
+        void Print();
+
+    private:
+
+        std::vector<std::pair<Word, Counts>> dictionary_;
+        unsigned int distinct_size_,total_size_;
 
     };
 

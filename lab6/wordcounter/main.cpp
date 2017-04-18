@@ -11,9 +11,11 @@ using ::datastructures::Word;
 
 int main()
 {
-    std::ifstream is("helo");
+    std::ifstream is("/home/kubas1129/helo.txt");
     WordCounter wc;
-    wc.FromInputStream(&is);
+    wc = wc.FromInputStream(&is);
+    wc.Print();
+
 
     return 0;
 }
