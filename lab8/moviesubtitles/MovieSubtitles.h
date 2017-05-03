@@ -8,8 +8,10 @@
 #include <string>
 #include <sstream>
 #include <stdexcept>
+#include <regex>
 
 namespace moviesubs {
+
 
     class MovieSubtitles {
     public:
@@ -75,6 +77,16 @@ namespace moviesubs {
     class NegativeFrameRateThrowsIlegalArgument : public std::invalid_argument{
     public:
         NegativeFrameRateThrowsIlegalArgument(std::string message) : std::invalid_argument(message) {}
+    };
+
+    class MissingTimeSpecification : public MovieSubtitlesException{
+    public:
+        MissingTimeSpecification(std::string message) : MovieSubtitlesException(message) {}
+    };
+
+    class OutOfOrderFrames : public MovieSubtitlesException{
+    public:
+        OutOfOrderFrames(std::string message) : MovieSubtitlesException(message) {}
     };
 
 }

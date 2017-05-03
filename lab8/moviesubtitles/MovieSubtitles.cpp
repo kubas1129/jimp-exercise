@@ -19,6 +19,7 @@ namespace moviesubs{
         std::string output = "";
         int line = 0;
 
+
         if(in && out)
         {
             if(delay == 0 || fps == 0) return in->str();
@@ -86,6 +87,88 @@ namespace moviesubs{
         }
 
         if(lastAddWord != '\n') output += '\n';
+
+        out->str(output);
+        return output;
+
+    }
+
+
+    std::string
+    SubRipSubtitles::ShiftAllSubtitlesBy(int delay, int fps, std::stringstream *in, std::stringstream *out) {
+        if(fps < 0) throw NegativeFrameRateThrowsIlegalArgument(std::to_string(fps));
+        std::string output = "";
+        std::string temp_line = "";
+        int line = 0;
+        if(delay == 0 || fps == 0) return in->str();
+
+        //if(delay < 0) throw NegativeFrameAfterShift(in->str());
+
+
+        while(getline(*in, temp_line))
+        {
+
+            std::regex time_searching {R"((\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3}))"};
+            std::smatch match;
+
+            if(std::regex_search(temp_line, match, time_searching))
+            {
+                line++;
+
+                if(match.length() != 29) throw InvalidSubtitleLineFormat(in->str());
+
+                std::cout << "Znazlem czas: " << temp_line << std::endl;
+
+
+                int begin_hours,begin_minutes,begin_seconds,begin_miliseconds;
+                int end_hours, end_minutes, end_seconds, end_miliseconds;
+
+                int bdt = (std::stoi(std::string(temp_line, 0,1))*1000*60*60 + std::stoi(std::string(temp_line, 3,4))*60*1000 + std::stoi(std::string(temp_line, 6,7))*1000 + std::stoi(std::string(temp_line, 9,11))) + delay;
+                int edt = (std::stoi(std::string(temp_line, 17,18))*1000*60*60 + std::stoi(std::string(temp_line, 20,21))*60*1000 + std::stoi(std::string(temp_line, 23,24))*1000 + std::stoi(std::string(temp_line, 26,29))) + delay;
+
+
+                if(edt < bdt) {
+                    std::string str = "At line " + std::to_string(line) + ": " + temp_line;
+                    throw SubtitleEndBeforeStart(str, line);
+                }
+
+                if(bdt < 0) throw OutOfOrderFrames(in->str());
+
+
+                begin_miliseconds = bdt % 1000;
+                bdt /= 1000;
+                begin_seconds = bdt % 60;
+                bdt /= 60;
+                begin_minutes = bdt % 60;
+                bdt /= 60;
+                begin_hours = bdt % 60;
+                bdt /= 60;
+
+                end_miliseconds = edt % 1000;
+                edt /= 1000;
+                end_seconds = edt % 60;
+                edt /= 60;
+                end_minutes = edt % 60;
+                edt /= 60;
+                end_hours = edt % 60;
+                edt /= 60;
+
+                output += (begin_hours<10 ? "0":"") + std::to_string(begin_hours)  + ":" + (begin_minutes<10 ? "0":"") + std::to_string(begin_minutes) + ":" + (begin_seconds<10 ? "0":"") + std::to_string(begin_seconds) + "," + (begin_miliseconds<100 ? "0":"") + std::to_string(begin_miliseconds) + " --> ";
+                output += (end_hours<10 ? "0":"") + std::to_string(end_hours) + ":" + (end_minutes<10 ? "0":"") + std::to_string(end_minutes) + ":" + (end_seconds<10 ? "0":"") + std::to_string(end_seconds) + "," + (end_miliseconds<100 ? "0":"") + std::to_string(end_miliseconds);
+                output += '\n';
+
+            }
+            else
+            {
+                std::regex exceptio_searching {R"(\d:\d)"};
+                std::smatch ex_match;
+                if(std::regex_search(temp_line, ex_match, exceptio_searching)) throw InvalidSubtitleLineFormat(in->str());
+
+                output += temp_line;
+                output += '\n';
+            }
+        }
+
 
         out->str(output);
         return output;
