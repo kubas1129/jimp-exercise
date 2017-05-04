@@ -100,6 +100,8 @@ namespace moviesubs{
         std::string output = "";
         std::string temp_line = "";
         int line = 0;
+        int number = 1;
+        const int timing_length = 29;
         if(delay == 0 || fps == 0) return in->str();
 
         //if(delay < 0) throw NegativeFrameAfterShift(in->str());
@@ -132,7 +134,7 @@ namespace moviesubs{
                     throw SubtitleEndBeforeStart(str, line);
                 }
 
-                if(bdt < 0) throw OutOfOrderFrames(in->str());
+                if(bdt < 0) throw NegativeFrameAfterShift(in->str());
 
 
                 begin_miliseconds = bdt % 1000;
@@ -156,7 +158,6 @@ namespace moviesubs{
                 output += (begin_hours<10 ? "0":"") + std::to_string(begin_hours)  + ":" + (begin_minutes<10 ? "0":"") + std::to_string(begin_minutes) + ":" + (begin_seconds<10 ? "0":"") + std::to_string(begin_seconds) + "," + (begin_miliseconds<100 ? "0":"") + std::to_string(begin_miliseconds) + " --> ";
                 output += (end_hours<10 ? "0":"") + std::to_string(end_hours) + ":" + (end_minutes<10 ? "0":"") + std::to_string(end_minutes) + ":" + (end_seconds<10 ? "0":"") + std::to_string(end_seconds) + "," + (end_miliseconds<100 ? "0":"") + std::to_string(end_miliseconds);
                 output += '\n';
-
             }
             else
             {
@@ -164,10 +165,23 @@ namespace moviesubs{
                 std::smatch ex_match;
                 if(std::regex_search(temp_line, ex_match, exceptio_searching)) throw InvalidSubtitleLineFormat(in->str());
 
+
+                std::regex number_search {R"(\d)"};
+                std::smatch num_match;
+                if(std::regex_search(temp_line, num_match, number_search)) {
+                    if (std::stoi(temp_line) == number) {
+                        number++;
+                    } else {
+                        throw OutOfOrderFrames(in->str());
+                    }
+                }
+
+
                 output += temp_line;
                 output += '\n';
             }
         }
+
 
 
         out->str(output);
