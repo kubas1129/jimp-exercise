@@ -39,10 +39,10 @@ namespace algo{
         else return false;
     }
 
-    std::set<std::string> Keys(std::set<std::string> keys) {
+    std::set<std::string> Keys(std::map<std::string,int> arg) {
         std::set<std::string> key;
 
-        //key.emplace_back(keys.key_comp());
+        
 
         return key;
     }

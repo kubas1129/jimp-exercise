@@ -22,7 +22,7 @@ namespace algo {
 
     bool ContainsKey(std::map<std::string, int> arg, std::string value);
 
-    std::set<std::string> Keys(std::set<std::string> keys);
+    std::set<std::string> Keys(std::map<std::string,int> arg);
 
     std::vector<int> Values(std::set<std::string> keys);
 
