@@ -46,4 +46,53 @@ namespace academia{
     void XmlSerializer::Footer(const std::string &object_name) {
         (*out_serializator) << std::string("<\\" + object_name + ">");
     }
+
+    void BuildingRepository::Add(Building &building) {
+        building_.push_back(building);
+    }
+
+    void BuildingRepository::StoreAll(Serializer *serializer)const {
+        vector<reference_wrapper<const Serializable>> reference;
+        serializer->Header("building_repository");
+        for(const Building &v : building_)
+        {
+            reference.emplace_back(v);
+        }
+        serializer->ArrayField("buildings", reference);
+        serializer->Footer("building_repository");
+
+    }
+
+    void BuildingRepository::StoreAll(XmlSerializer *xmlserializer) {
+        xmlserializer->Header("building_repository");
+        xmlserializer->Header("buildings");
+        for(auto &v : building_)
+        {
+
+            v.Serialize(xmlserializer);
+
+        }
+        xmlserializer->Footer("buildings");
+        xmlserializer->Footer("building_repository");
+    }
+
+    void BuildingRepository::StoreAll(JsonSerializer *jsonserializer) {
+        jsonserializer->AddToOutput("{\"buildings\": [");
+        int leng = 0;
+        for(auto &v : building_)
+        {
+            leng++;
+            v.Serialize(jsonserializer);
+            if(leng < building_.size()) jsonserializer->AddToOutput(", ");
+        }
+        jsonserializer->AddToOutput("]}");
+
+    }
+
+    std::experimental::optional<Building> BuildingRepository::operator[](int id) const{
+        for(int i = 0; i < building_.size();i++)
+        {
+            if(building_[i].Id() == id) return experimental::make_optional(building_[i]);
+        }
+    }
 }

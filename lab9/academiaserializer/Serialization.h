@@ -8,12 +8,14 @@
 #include<string>
 #include <vector>
 #include <functional>
+#include <experimental/optional>
 
 using namespace std;
 using namespace std::literals;
 
 namespace academia {
 
+    class Building;
     class Serializable;
 
     class Serializer{
@@ -182,6 +184,8 @@ namespace academia {
             xmlserializer->Footer("building");
         }
 
+        int Id() const { return id_; }
+
     private:
         int id_;
         std::string name_;
@@ -190,6 +194,25 @@ namespace academia {
     };
 
 
+    class BuildingRepository{
+    public:
+
+        BuildingRepository(std::initializer_list<Building> arg) {
+            for(auto &v : arg) building_.push_back(v);
+        }
+
+
+        void Add(Building &building);
+
+        void StoreAll(Serializer *serializer)const;
+        void StoreAll(XmlSerializer *xmlserializer);
+        void StoreAll(JsonSerializer *jsonserializer);
+
+        std::experimental::optional<Building> operator[](int id)const;
+
+    private:
+        vector<Building> building_;
+    };
 
 }
 
