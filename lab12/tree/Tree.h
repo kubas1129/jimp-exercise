@@ -13,35 +13,59 @@ namespace tree {
 
 
     template <class T>
-    class Tree;
-
-    template <class T>
-    struct Node{
-    public:
-        T value;
-        std::unique_ptr<Tree<T>> left;
-        std::unique_ptr<Tree<T>> right;
-
-
-    };
-
-
-
-
-    template <class T>
     class Tree{
     public:
-        void SetRoot(Node<T> node) {
-            root = std::make_unique(node);
-        }
+        Tree();
+        Tree(T key);
 
-        void Insert(Node<T> node){
+        void Insert(T key);
 
-        }
+        T Value() const { return key_;  }
+
+        size_t Depth() {}
+        size_t Size() {}
 
     private:
-        std::unique_ptr<Node<T>> root;
+        T key_;
+        std::unique_ptr<Tree<T>> left_;
+        std::unique_ptr<Tree<T>> right_;
     };
+
+
+    template <class T>
+    Tree<T>::Tree(T key) {
+        key_ = key;
+        left_ = nullptr;
+        right_ = nullptr;
+    }
+
+    template <class T>
+    void Tree<T>::Insert(T key) {
+        if(key > key_)
+        {
+            if(right_ != nullptr)
+            {
+                right_ = std::make_unique<Tree<T>>(key);
+            }
+            else
+            {
+                right_->Insert(key);
+            }
+        }
+        else
+        {
+            if(left_ != nullptr)
+            {
+                left_ = std::make_unique<Tree<T>>(key);
+            }
+            else
+            {
+                left_->Insert(key);
+            }
+        }
+    }
+
+
 
 }
 
