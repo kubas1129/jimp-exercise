@@ -4,4 +4,6 @@ add_subdirectory_if_exists(tree)
 add_subdirectory_if_exists(timerecorder)
 add_subdirectory_if_exists(teacherhash)
 add_subdirectory_if_exists(academiasequentialgenerator)
+add_subdirectory_if_exists(treeiterators)
+
 
