@@ -16,29 +16,24 @@ namespace tree{
         Tree(T value);
         void Insert(T value);
         T Value();
-        std::unique_ptr<Tree> Left();
-        std::unique_ptr<Tree> Right();
+        std::shared_ptr<Tree> Left();
+        std::shared_ptr<Tree> Right();
         int Size();
-        Tree Root();
+        Tree<T> Root() ;
         size_t Depth();
 
-
     private:
-        std::unique_ptr<Tree> left_;
-        std::unique_ptr<Tree> right_;
+        std::shared_ptr<Tree> left_;
+        std::shared_ptr<Tree> right_;
         int size_;
         int depth_;
         T value_;
+
     };
 
     template<class T>
-    Tree Tree<T>::Root(){
-        return *this;
-    }
-
-    template<class T>
     Tree<T>::Tree():size_(0),depth_(0) {
-        value_ = nullptr;
+        value_ = 0;
         left_ = nullptr;
         right_ = nullptr;
     }
@@ -54,12 +49,12 @@ namespace tree{
     void Tree<T>::Insert(T value) {
         if (value > value_) {
             if (!right_)
-                right_ = std::make_unique<Tree<T>>(value);
+                right_ = std::make_shared<Tree<T>>(value);
             else
                 right_->Insert(value);
         }else {
             if (!left_)
-                left_ = std::make_unique<Tree<T>>(value);
+                left_ = std::make_shared<Tree<T>>(value);
             else
                 left_->Insert(value);
         }
@@ -71,11 +66,11 @@ namespace tree{
         return value_;
     }
     template<class T>
-    std::unique_ptr<Tree<T>> Tree<T>::Left() {
+    std::shared_ptr<Tree<T>> Tree<T>::Left() {
         return left_;
     }
     template<class T>
-    std::unique_ptr<Tree<T>> Tree<T>::Right(){
+    std::shared_ptr<Tree<T>> Tree<T>::Right(){
         return right_;
     }
 
@@ -98,44 +93,47 @@ namespace tree{
 
     }
 
+    template<class T>
+    Tree<T> Tree<T>::Root(){
 
-    /*template<class T>
-    void Tree<T>::PrintTreeInOrder(const std::unique_ptr<Tree> &unique_ptr) {
-        if (unique_ptr != nullptr) {
-            PrintTreeInOrder(unique_ptr->left_);
-            roots_.push_back(unique_ptr->value_);
-            PrintTreeInOrder(unique_ptr->right_);
-        }
-
-    };*/
+        return *this;
+    }
 
     template<class T>
     class InOrderTreeIterator{
     public:
         InOrderTreeIterator(T value);
+        InOrderTreeIterator(Tree<int> &value);
         void operator++();
         int operator*();
         int *iterator_;
-        void PrintTreeInOrder(std::unique_ptr<Tree<T>> &uniq);
+        void PrintTreeInOrder(std::shared_ptr<Tree<T>> uniq);
     private:
         std::vector<int> iterator_vector;
         int number_;
 
     };
+//złeee
 
     template<class T>
-    InOrderTreeIterator<T>::InOrderTreeIterator(T value):number_(0){
+    InOrderTreeIterator<T>::InOrderTreeIterator(T value):number_(0) {
         PrintTreeInOrder(*std::make_unique<Tree<T>>(value));
-        *iterator_=iterator_vector.at(0);
+        *iterator_=1;
 
     };
+    template<class T>
+    InOrderTreeIterator<T>::InOrderTreeIterator(Tree<int> &value):number_(0) {
+        //iterator_vector.push_back(int(value.Value()));
+        PrintTreeInOrder(std::make_shared<Tree<T>>(value));
+        *iterator_=iterator_vector[number_];
+    }
 
     template<class T>
-    void InOrderTreeIterator<T>::PrintTreeInOrder(std::unique_ptr<Tree<T>> &uniq) {
+    void InOrderTreeIterator<T>::PrintTreeInOrder(std::shared_ptr<Tree<T>> uniq) {
         if (uniq != nullptr) {
-            PrintTreeInOrder(*uniq->Left());
-            iterator_vector.push_back(uniq->Value());
-            PrintTreeInOrder(*uniq->Right());
+            PrintTreeInOrder(uniq->Left());
+            iterator_vector.push_back(int(uniq->Value()));
+            PrintTreeInOrder(uniq->Right());
         }
     }
 
