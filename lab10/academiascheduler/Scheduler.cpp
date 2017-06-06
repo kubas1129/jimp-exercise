@@ -127,8 +127,6 @@ namespace academia {
                 }
             }
         }
-
-        std::cout << "RETURN";
         return sched;
     }
 
