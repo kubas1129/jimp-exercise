@@ -49,7 +49,7 @@ TEST_F(TreeInorderTest,InOrderIteratorIsDereferencable) {
   int value2 = *iterator;
   //no tests EXPECT_EQ(0, value1);
 }
-/*
+
 TEST_F(TreeInorderTest,InOrderIteratorComparableByNotEqualOperator) {
   auto root = simple_tree.Root();
   InOrderTreeIterator<int> iterator1 = InOrderTreeIterator<int>(root);
@@ -78,8 +78,8 @@ TEST_F(TreeInorderTest,InOrderIteratorJumpsOverTreeInorder) {
   EXPECT_EQ(98341, *iterator);
   ++iterator;
   EXPECT_EQ(198341, *iterator);
-}*/
-/*
+}
+
 TEST_F(TreeInorderTest, CanCreateInOrderTreeView) {
   InOrderTreeView<int> inorder_view = InOrderTreeView<int>(&simple_tree);
 }
@@ -111,4 +111,4 @@ TEST_F(TreeInorderTest, InOrderMethodProvidesProperOrderOfValues) {
     EXPECT_EQ(*expected_it, value_in_tree);
     ++expected_it;
   }
-}*/
+}
